@@ -10,7 +10,10 @@
     "
   >
     <div class="calculator-header self-start ml-5 text-white text-2xl">
-      <button class="calculator-header-btn w-52 h-16 rounded-full" @click="backToHome">
+      <button
+        class="calculator-header-btn w-52 h-16 rounded-full"
+        @click="backToHome"
+      >
         back to home
       </button>
     </div>
@@ -337,27 +340,37 @@ export default {
   methods: {
     backToHome() {
       this.$router.push({
-        path: "/"
-      })
+        path: "/",
+      });
     },
     addNumber(number) {
-      this.numberDisplay = "";
-      if (this.clickedOperation) {
-        this.numberDisplay = this.numberDisplay.concat(number);
-        this.firstClickedNumber = this.numberDisplay;
-        console.log(this.firstClickedNumber);
+      if (this.numberDisplay == "Select a number") {
+        this.numberDisplay = "";
+        if (this.clickedOperation == "") {
+          this.numberDisplay = this.numberDisplay.concat(number);
+          this.firstClickedNumber = this.numberDisplay;
+          console.log("entrou");
+        } else {
+          this.numberDisplay = this.numberDisplay.concat(number);
+          this.secondClickedNumber = this.numberDisplay;
+        }
       } else {
-        this.numberDisplay = this.numberDisplay.concat(number);
-        this.secondClickedNumber = this.numberDisplay;
-        console.log(this.secondClickedNumber);
+        if (this.clickedOperation == "") {
+          this.numberDisplay = this.numberDisplay.concat(number);
+          this.firstClickedNumber = this.numberDisplay;
+          console.log("entrou");
+        } else {
+          this.numberDisplay = this.numberDisplay.concat(number);
+          this.secondClickedNumber = this.numberDisplay;
+        }
       }
     },
     addOperation(operation) {
+      this.numberDisplay = ""
       this.clickedOperation = operation;
     },
     deleteNumber(quantity) {
       if (this.numberDisplay !== "Select a number") {
-        console.log(quantity);
         if (quantity == "one") {
           let numberDisplay = String(this.numberDisplay);
           this.numberDisplay = numberDisplay.substring(
