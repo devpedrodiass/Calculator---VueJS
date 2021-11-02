@@ -335,6 +335,7 @@ export default {
       operation2: "-",
       operation3: "/",
       operation4: "x",
+      submitted: false,
     };
   },
   methods: {
@@ -366,7 +367,7 @@ export default {
       }
     },
     addOperation(operation) {
-      this.numberDisplay = ""
+      this.numberDisplay = "";
       this.clickedOperation = operation;
     },
     deleteNumber(quantity) {
@@ -378,9 +379,11 @@ export default {
             numberDisplay.length - 1
           );
           this.clickedOperation = "";
+          this.submitted = false;
         } else {
           this.numberDisplay = "";
           this.clickedOperation = "";
+          this.submitted = false;
         }
       }
     },
@@ -393,22 +396,50 @@ export default {
       console.log(number1);
       console.log(number2);
 
-      switch (operation) {
-        case "+":
-          this.numberDisplay = number1 + number2;
-          break;
-        case "-":
-          this.numberDisplay = number1 - number2;
-          break;
-        case "/":
-          this.numberDisplay = number1 / number2;
-          break;
-        case "x":
-          this.numberDisplay = number1 * number2;
-          break;
+      if (this.submitted !== true) {
+        switch (operation) {
+          case "+":
+            this.numberDisplay = number1 + number2;
+            this.submitted = true;
+            break;
+          case "-":
+            this.numberDisplay = number1 - number2;
+            this.submitted = true;
+            break;
+          case "/":
+            this.numberDisplay = number1 / number2;
+            this.submitted = true;
+            break;
+          case "x":
+            this.numberDisplay = number1 * number2;
+            this.submitted = true;
+            break;
 
-        default:
-          break;
+          default:
+            break;
+        }
+      } else {
+        switch (operation) {
+          case "+":
+            this.numberDisplay = this.numberDisplay + number2;
+            this.submitted = true;
+            break;
+          case "-":
+            this.numberDisplay = this.numberDisplay - number2;
+            this.submitted = true;
+            break;
+          case "/":
+            this.numberDisplay = this.numberDisplay / number2;
+            this.submitted = true;
+            break;
+          case "x":
+            this.numberDisplay = this.numberDisplay * number2;
+            this.submitted = true;
+            break;
+
+          default:
+            break;
+        }
       }
     },
   },
